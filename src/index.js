@@ -1,28 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import TodoList from "./Components/Todo-List/Todo-List";
+import SearchPanel from "./Components/Search-Panel/Search-Panel";
+import AppHeader from "./Components/App-Header/App-Header";
 
-const TodoList = () => {
-    return (
-        <ul>
-            <li>Use React</li>
-            <li>Build App</li>
-        </ul>
-    );
-};
-
-const AppHeader = () => {
-    return <h1>My Todo list</h1>;
-};
-
-const SearchPanel = () => {
-    return <input type="text" placeholder="search"/>;
-};
 
 const App = () => {
+    const isLoggedIn = false;
+    const loginBox = <span>Log in please</span>
+    const welcomeBox = <span>Welcome back</span>
     return (
         <div>
+            { isLoggedIn ? welcomeBox : loginBox }
+            <span> {(new Date()).toString()} </span>
             <AppHeader/>
-            <SearchPanel />
+            <SearchPanel/>
             <TodoList/>
         </div>
     );
@@ -30,3 +22,4 @@ const App = () => {
 
 
 ReactDOM.render(<App/>, document.getElementById('root'));
+
