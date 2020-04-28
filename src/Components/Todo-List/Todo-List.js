@@ -1,17 +1,21 @@
 import React from "react";
 import TodoListItem from "../Todo-List-Item/Todo-List-Item";
+import './todo-list.css';
 
-const TodoList = () => {
-    const items = ['Use React', 'Build App'];
+const TodoList = (props) => {
+    const { todos } = props;
+    const elements = todos.map((el) => {
+        // в elProps попадут все свойства не деструктуризированные
+        // в этом объекте, то есть label, important
+        const { id, ...elProps } = el;
+        return (
+        <li key={el.id} className="list-group-item">
+            <TodoListItem { ...elProps }/>
+        </li>);
+    });
     return (
-        <ul>
-            <li><TodoListItem label="Drink coffee"/></li>
-            <li><TodoListItem
-                label="Eat pizza"
-                important={true}
-            /></li>
-            <li>{items[0]}</li>
-            <li>{items[1]}</li>
+        <ul className="list-group todo-list">
+            { elements }
         </ul>
     );
 };

@@ -3,19 +3,25 @@ import ReactDOM from "react-dom";
 import TodoList from "./Components/Todo-List/Todo-List";
 import SearchPanel from "./Components/Search-Panel/Search-Panel";
 import AppHeader from "./Components/App-Header/App-Header";
-
+import ItemStatusFilter from "./Components/Item-Status-Filter/Item-Status-Filter";
+import './index.css'
 
 const App = () => {
-    const isLoggedIn = false;
-    const loginBox = <span>Log in please</span>
-    const welcomeBox = <span>Welcome back</span>
+    const todoData = [
+        {label: 'Drink water', important: false, id: 1},
+        {label: 'Eat pizza', important: false, id: 2},
+        {label: 'Sleep', important: true, id: 3},
+        {label: 'Wash', important: false, id: 4},
+    ];
+
     return (
-        <div>
-            { isLoggedIn ? welcomeBox : loginBox }
-            <span> {(new Date()).toString()} </span>
-            <AppHeader/>
-            <SearchPanel/>
-            <TodoList/>
+        <div className="todo-app">
+            <AppHeader toDo={1} done={3}/>
+            <div className="top-panel d-flex">
+                <SearchPanel/>
+                <ItemStatusFilter/>
+            </div>
+            <TodoList todos={todoData}/>
         </div>
     );
 };
