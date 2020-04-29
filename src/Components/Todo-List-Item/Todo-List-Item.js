@@ -1,18 +1,21 @@
-import React from "react";
+import React, { Component } from "react";
 import './todo-list-item.css'
 
-const TodoListItem = (props) => {
-    const itemStyle = {
-        color: props.important ? 'steelblue' : 'black',
-        fontWeight: props.important ? '700' : '400'
-    }
-    return (
-        <span className="todo-list-item">
+export default class TodoListItem extends Component{
+
+    render() {
+        const itemStyle = {
+            color: this.props.important ? 'steelblue' : 'black',
+            fontWeight: this.props.important ? '700' : '400'
+        }
+
+        return (
+            <span className="todo-list-item">
             <span
                 className="todo-list-item-label"
                 style={itemStyle}
             >
-                {props.label}
+                {this.props.label}
             </span>
             <button
                 type="button"
@@ -27,13 +30,7 @@ const TodoListItem = (props) => {
                 <i className="fa fa-trash-o"/>
             </button>
         </span>
-    );
-
-    // <span
-
-    // >
-    //
-    // </span>;
+        );
+    }
 }
 
-export default TodoListItem;
