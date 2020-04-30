@@ -3,14 +3,17 @@ import TodoListItem from "../Todo-List-Item/Todo-List-Item";
 import './todo-list.css';
 
 const TodoList = (props) => {
-    const { todos } = props;
+    const { todos, onDeleted } = props;
     const elements = todos.map((el) => {
         // в elProps попадут все свойства не деструктуризированные
         // в этом объекте, то есть label, important
         const { id, ...elProps } = el;
         return (
         <li key={el.id} className="list-group-item">
-            <TodoListItem { ...elProps }/>
+            <TodoListItem
+                { ...elProps }
+                onDeleted={() => onDeleted(el.id)}
+            />
         </li>);
     });
     return (
