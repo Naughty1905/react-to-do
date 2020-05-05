@@ -8,6 +8,9 @@ import './app.css';
 
 export default class App extends Component {
 
+    //не влияет на рендер так что можно не писать в стейт
+    maxId = 100;
+
     state = {
         todoData: [
             {label: 'Drink water', important: false, id: 1},
@@ -20,10 +23,33 @@ export default class App extends Component {
     deleteItem = (id) => {
         this.setState(({todoData}) => {
             return {
-                todoData: todoData.filter((el) => el.id!==id)
+                todoData: todoData.filter((el) => el.id !== id)
             };
         });
     };
+
+    addItem = (text) => {
+        const newItem = {
+            label: text,
+            important: false,
+            id: this.maxId++
+        }
+
+        this.setState(({todoData}) => {
+            const newArray = [...todoData, newItem];
+            return {
+                todoData: newArray
+            };
+        });
+    };
+
+    toggleDone = (id) => {
+        console.log('important', id);
+    }
+
+    toggleImportant = (id) => {
+        console.log('done', id);
+    }
 
     render() {
         return (
@@ -36,8 +62,10 @@ export default class App extends Component {
                 <TodoList
                     todos={this.state.todoData}
                     onDeleted={this.deleteItem}
+                    onToggleDone={this.toggleDone}
+                    onToggleImportant={this.toggleImportant}
                 />
-                <AddItemForm />
+                <AddItemForm onItemAdded={this.addItem}/>
             </div>
         )
     }

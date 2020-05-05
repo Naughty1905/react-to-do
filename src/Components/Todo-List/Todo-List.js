@@ -3,7 +3,7 @@ import TodoListItem from "../Todo-List-Item/Todo-List-Item";
 import './todo-list.css';
 
 const TodoList = (props) => {
-    const { todos, onDeleted } = props;
+    const { todos, onDeleted, onToggleDone, onToggleImportant } = props;
     const elements = todos.map((el) => {
         // в elProps попадут все свойства не деструктуризированные
         // в этом объекте, то есть label, important
@@ -13,6 +13,8 @@ const TodoList = (props) => {
             <TodoListItem
                 { ...elProps }
                 onDeleted={() => onDeleted(el.id)}
+                onToggleDone={() => onToggleDone(el.id)}
+                onToggleImportant={() => onToggleImportant(el.id)}
             />
         </li>);
     });
