@@ -12,6 +12,7 @@ export default class App extends Component {
     maxId = 100;
 
     state = {
+        filter: 'active',
         term:'',
         todoData: [
             this.createTodoItem('Drink water'),
@@ -19,7 +20,7 @@ export default class App extends Component {
             this.createTodoItem('Sleep'),
             this.createTodoItem('Wash'),
         ],
-    }
+    };
 
     createTodoItem(label) {
         return {
@@ -53,12 +54,11 @@ export default class App extends Component {
             const idx = array.findIndex((el) => el.id===id);
             const oldItem = array[idx];
             const newItem = {...oldItem, [propName]: !oldItem[propName]};
-            const newArray = [
+        return [
                 ...array.slice(0, idx),
                 newItem,
-                ...array.slice(idx+1)
+                ...array.slice(idx + 1)
             ];
-            return newArray;
     }
 
     toggleDone = (id) => {
@@ -91,6 +91,23 @@ export default class App extends Component {
         this.setState({term:search});
     };
 
+    filter(items, filter) {
+      switch(filter){
+          case 'All':
+              return items;
+          case 'Active':
+              return items.filter((el) => !el.done);
+          case 'Done':
+              return items.filter((el)=> el.done);
+          default:
+              return items;
+      };
+    };
+
+    onFilterChange = (filter) =>{
+        this.setState({filter});
+    }
+
     render() {
         const doneLength = this.state.todoData.reduce((accumulator,el) => {
             if(el.done){
@@ -100,8 +117,8 @@ export default class App extends Component {
         },0);
         const todosLength = this.state.todoData.length-doneLength;
 
-        const { term, todoData } = this.state;
-        const visibleItems = this.search(todoData, term);
+        const { term, todoData, filter } = this.state;
+        const visibleItems = this.filter(this.search(todoData, term), filter);
         return (
             <div className="todo-app">
                 <AppHeader toDo={todosLength} done={doneLength}/>
@@ -109,7 +126,9 @@ export default class App extends Component {
                     <SearchPanel
                         onSearchChange={this.onSearchChange}
                     />
-                    <ItemStatusFilter/>
+                    <ItemStatusFilter
+                        onFilterChange={this.onFilterChange}
+                        filter={this.state.filter}/>
                 </div>
                 <TodoList
                     todos={visibleItems}
